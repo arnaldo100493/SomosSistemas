@@ -9,10 +9,19 @@ package com.sesion6.entidades;
  *
  * @author abarrios
  */
-public class Cliente {
+public class Cliente extends Persona {
 
     public Cliente() {
+        super();
+    }
 
+    public String mostrarCliente() {
+        return super.mostrarPersona();
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 
 }

@@ -57,6 +57,10 @@ public class Persona {
     public void comer() {
 
     }
+    
+    public String mostrarPersona() {
+        return "Persona{" + "dni=" + getDni() + ", nombres=" + getNombres() + ", apellidoPaterno=" + getApellidoPaterno() + ", apellidoMaterno=" + getApellidoMaterno() + ", edad=" + getEdad() + ", talla=" + getTalla() + ", peso=" + getPeso() + '}';
+    }
 
     @Override
     public String toString() {
