@@ -5,8 +5,6 @@
  */
 package com.sesion3.vista;
 
-import java.awt.Button;
-
 /**
  *
  * @author abarrios
