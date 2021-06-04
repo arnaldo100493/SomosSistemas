@@ -16,26 +16,26 @@ import java.sql.SQLException;
  *
  * @author cyber
  */
-//Clase para conectarse con la Base de Datos
-public class Conexion implements Serializable {
+//Clase para conectarse con la Base de Datos.
+public class ConexionMySQL implements Serializable {
 
-    //Atributos
+    //Atributos.
     private static transient JdbcConnection conexion;
     private static final String driver = "com.mysql.cj.jdbc.Driver";
     private static final String url = "jdbc:mysql://localhost:3306/dbregistro?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrival=true";
     private static final String user = "root";
     private static final String password = "Arnaldo100493*";
 
-    //Constructores
-    public Conexion() {
+    //Constructores.
+    public ConexionMySQL() {
         conexion = conectarBaseDeDatos();
     }
 
-    public Conexion(JdbcConnection con) {
+    public ConexionMySQL(JdbcConnection con) {
         conexion = con;
     }
 
-    //Métodos
+    //Métodos.
     public JdbcConnection getConexion() {
         return conexion;
     }

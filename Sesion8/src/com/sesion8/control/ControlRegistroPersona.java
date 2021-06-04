@@ -5,7 +5,7 @@
  */
 package com.sesion8.control;
 
-import com.sesion8.jdbc.Conexion;
+import com.sesion8.jdbc.ConexionMySQL;
 import com.sesion8.modelo.Persona;
 import com.sesion8.utilidades.MensajesSwing;
 import com.sesion8.utilidades.ModelosComponentesSwing;
@@ -22,10 +22,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ControlRegistroPersona {
 
-    private final Conexion conexion;
+    private final ConexionMySQL conexion;
 
     public ControlRegistroPersona() {
-        this.conexion = new Conexion();
+        this.conexion = new ConexionMySQL();
     }
 
     public void mostrarListadoDatos(DefaultTableModel modeloTabla, JTable tabla, JTextField buscar) {
