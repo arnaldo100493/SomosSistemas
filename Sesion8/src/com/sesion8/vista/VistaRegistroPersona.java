@@ -10,6 +10,8 @@ import com.sesion8.modelo.Persona;
 import com.sesion8.utilidades.LimpiarComponentes;
 import com.sesion8.utilidades.MensajesSwing;
 import com.sesion8.utilidades.ModelosComponentesSwing;
+import com.sesion8.utilidades.ValidarCampoNumerico;
+import com.sesion8.utilidades.ValidarFormatoCorreoElectronico;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.table.DefaultTableModel;
@@ -41,6 +43,7 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
 
     //Variables para la modificación y eliminación de datos.
     private boolean modificar = false;
+    private boolean deshabilitar = false;
     private boolean eliminar = false;
 
     //Constructor.
@@ -59,6 +62,9 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
                 return false;
             }
         };
+        //El cursor en nombres
+        this.txtNombres.requestFocus();
+        //Agregamos el modelo a la tabla.
         this.tblListadoDatosPersonas.setModel(this.modeloTabla);
         this.modeloTabla.addColumn("Nº");
         this.modeloTabla.addColumn("Id");
@@ -91,7 +97,6 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
 
     private void limpiarCampos() {
         LimpiarComponentes.limpiarComponentes(this.pnlRegistroPersonas);
-
         this.btnGuardar.setText("Guardar");
         this.modificar = false;
         //El cursor en nombres
@@ -117,7 +122,7 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
         return correcto;
     }
 
-    /*private void validarNombres() {
+    private void validarNombres() {
         String nombres = this.txtNombres.getText().trim();
         if (nombres.isEmpty()) {//Está Vacío?
             this.validarNombres = false;
@@ -126,9 +131,9 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
             this.validarNombres = true;
             this.lblValidarNombres.setVisible(false);
         }
-    }*/
+    }
 
- /*private void validarApellidoPaterno() {
+    private void validarApellidoPaterno() {
         String apellidoPaterno = this.txtApellidoPaterno.getText().trim();
         if (apellidoPaterno.isEmpty()) {//Está Vacío?
             this.validarApellidoPaterno = false;
@@ -137,8 +142,9 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
             this.validarApellidoPaterno = true;
             this.lblValidarApellidoPaterno.setVisible(false);
         }
-    }*/
- /*private void validarApellidoMaterno() {
+    }
+
+    private void validarApellidoMaterno() {
         String apellidoMaterno = this.txtApellidoMaterno.getText().trim();
         if (apellidoMaterno.isEmpty()) {//Está Vacío?
             this.validarApellidoMaterno = false;
@@ -147,12 +153,11 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
             this.validarApellidoMaterno = true;
             this.lblValidarApellidoMaterno.setVisible(false);
         }
-    }*/
- /*private void validarTelefono() {
-        String telefono = this.txtTelefono.getText();
-        
-        this.validarTelefono = ValidarCampoNumerico.validarCampoNumerico(telefono);
+    }
 
+    private void validarTelefono() {
+        String telefono = this.txtTelefono.getText();
+        this.validarTelefono = ValidarCampoNumerico.validarCampoNumerico(telefono);
         if (this.validarTelefono) {
             this.lblValidarTelefono.setVisible(false); //No se ve
             System.out.println("Es correcto...!!!! :D");
@@ -160,9 +165,9 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
             this.lblValidarTelefono.setVisible(true);
             System.err.println("No es correcto...!!! :(");
         }
-    }*/
+    }
 
- /*private void validarCorreoElectronico() {
+    private void validarCorreoElectronico() {
         String correoElectronico = this.txtCorreoElectronico.getText();
         this.validarCorreoElectronico = ValidarFormatoCorreoElectronico.validarFormatoCorreoElectronico(correoElectronico);
         if (this.validarCorreoElectronico) {
@@ -172,9 +177,20 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
             this.lblValidarCorreoElectronico.setVisible(true);
             System.err.println("No es correcto...!!! :(");
         }
-    }*/
+    }
 
- /*private void llenarTabla() {
+    private void validarDireccion() {
+        String direccion = this.txtDireccion.getText().trim();
+        if (direccion.isEmpty()) {//Está Vacío?
+            this.validarDireccion = false;
+            this.lblValidarDireccion.setVisible(true);
+        } else {
+            this.validarDireccion = true;
+            this.lblValidarDireccion.setVisible(false);
+        }
+    }
+
+    private void llenarTabla() {
         if (this.validarCampos()) {
             String nombres = this.txtNombres.getText();
             String apellidoPaterno = this.txtApellidoPaterno.getText();
@@ -190,10 +206,15 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
             //Limpiamos los campos
             this.limpiarCampos();
         }
-    }*/
+    }
+
     private void mostrarListadoDatos() {
         ModelosComponentesSwing.vaciarTabla(this.modeloTabla);
         this.controlRegistroPersona.mostrarListadoDatos(this.modeloTabla, this.tblListadoDatosPersonas, this.txtBuscar);
+    }
+
+    private void actualizarTabla() {
+        this.mostrarListadoDatos();
     }
 
     private void guardarDatos() {
@@ -211,7 +232,7 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
                 if (respuesta) {
                     MensajesSwing.mostrarDialogoMensajeInformacion("¡Registro Correcto!");
                     this.limpiarCampos();
-                    this.mostrarListadoDatos();
+                    this.actualizarTabla();
                 } else {
                     MensajesSwing.mostrarDialogoMensajeError("¡Error en el Registro!");
                 }
@@ -219,10 +240,31 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
                 boolean respuesta = this.controlRegistroPersona.modificarDatos(nombres, apellidoPaterno, apellidoMaterno, telefono, correoElectronico, direccion, this.id);
                 if (respuesta) {
                     MensajesSwing.mostrarDialogoMensajeInformacion("¡Registro Modificado!");
-                    this.mostrarListadoDatos();
+                    this.actualizarTabla();
                     this.limpiarCampos();
                 } else {
                     MensajesSwing.mostrarDialogoMensajeError("¡Error al Modificar los Datos!");
+                }
+            }
+        }
+        /*if (this.validacionesCampos() && this.validarCampos()) {
+            this.llenarTabla();
+        } else {
+            MensajesSwing.mostrarDialogoMensajeError("No se puede guardar, porque existen validaciones faltantes");
+        }*/
+    }
+
+    private void eliminarDatosDesactivarEstado() {
+        if (this.deshabilitar) {
+            int confirmacion = MensajesSwing.mostrarDialogoMensajeConfirmacion("¿Realmente desea eliminar este registro?");
+            if (confirmacion == 0) {
+                boolean respuesta = this.controlRegistroPersona.eliminarDatosDesactivarEstado(this.id);
+                if (respuesta) {
+                    MensajesSwing.mostrarDialogoMensajeInformacion("¡Registro Eliminado!");
+                    this.actualizarTabla();
+                    this.limpiarCampos();
+                } else {
+                    MensajesSwing.mostrarDialogoMensajeError("¡Error al Eliminar los Datos!");
                 }
             }
         }
@@ -236,7 +278,7 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
                     boolean respuesta = this.controlRegistroPersona.eliminarDatos(this.id);
                     if (respuesta) {
                         MensajesSwing.mostrarDialogoMensajeInformacion("¡Registro Eliminado!");
-                        this.mostrarListadoDatos();
+                        this.actualizarTabla();
                         this.limpiarCampos();
                     } else {
                         MensajesSwing.mostrarDialogoMensajeError("¡Error al Eliminar los Datos!");
@@ -278,6 +320,12 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
         btnLimpiar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
+        lblValidarNombres = new javax.swing.JLabel();
+        lblValidarApellidoPaterno = new javax.swing.JLabel();
+        lblValidarApellidoMaterno = new javax.swing.JLabel();
+        lblValidarTelefono = new javax.swing.JLabel();
+        lblValidarCorreoElectronico = new javax.swing.JLabel();
+        lblValidarDireccion = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -328,14 +376,32 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
 
         lblNombres.setText("Nombres:");
         pnlRegistroPersonas.add(lblNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
+
+        txtNombres.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtNombresCaretUpdate(evt);
+            }
+        });
         pnlRegistroPersonas.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, 510, -1));
 
         lblApellidoPaterno.setText("Apellido Paterno:");
         pnlRegistroPersonas.add(lblApellidoPaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
+
+        txtApellidoPaterno.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtApellidoPaternoCaretUpdate(evt);
+            }
+        });
         pnlRegistroPersonas.add(txtApellidoPaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 510, -1));
 
         lblApellidoMaterno.setText("Apellido Materno:");
         pnlRegistroPersonas.add(lblApellidoMaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, -1));
+
+        txtApellidoMaterno.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtApellidoMaternoCaretUpdate(evt);
+            }
+        });
         pnlRegistroPersonas.add(txtApellidoMaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 510, -1));
 
         lblTelefono.setText("Teléfono:");
@@ -346,8 +412,26 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
 
         lblDireccion.setText("Dirección:");
         pnlRegistroPersonas.add(lblDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, -1, -1));
+
+        txtTelefono.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtTelefonoCaretUpdate(evt);
+            }
+        });
         pnlRegistroPersonas.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 510, -1));
+
+        txtCorreoElectronico.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtCorreoElectronicoCaretUpdate(evt);
+            }
+        });
         pnlRegistroPersonas.add(txtCorreoElectronico, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 510, -1));
+
+        txtDireccion.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtDireccionCaretUpdate(evt);
+            }
+        });
         pnlRegistroPersonas.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, 510, -1));
 
         btnLimpiar.setText("Limpiar");
@@ -373,6 +457,30 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
             }
         });
         pnlRegistroPersonas.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 280, -1, -1));
+
+        lblValidarNombres.setForeground(new java.awt.Color(255, 0, 0));
+        lblValidarNombres.setText("*");
+        pnlRegistroPersonas.add(lblValidarNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 30, -1, -1));
+
+        lblValidarApellidoPaterno.setForeground(new java.awt.Color(255, 0, 0));
+        lblValidarApellidoPaterno.setText("*");
+        pnlRegistroPersonas.add(lblValidarApellidoPaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 70, 20, -1));
+
+        lblValidarApellidoMaterno.setForeground(new java.awt.Color(255, 0, 0));
+        lblValidarApellidoMaterno.setText("*");
+        pnlRegistroPersonas.add(lblValidarApellidoMaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 110, 20, -1));
+
+        lblValidarTelefono.setForeground(new java.awt.Color(255, 0, 0));
+        lblValidarTelefono.setText("*");
+        pnlRegistroPersonas.add(lblValidarTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 150, 10, -1));
+
+        lblValidarCorreoElectronico.setForeground(new java.awt.Color(255, 0, 0));
+        lblValidarCorreoElectronico.setText("*");
+        pnlRegistroPersonas.add(lblValidarCorreoElectronico, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 190, 20, -1));
+
+        lblValidarDireccion.setForeground(new java.awt.Color(255, 0, 0));
+        lblValidarDireccion.setText("*");
+        pnlRegistroPersonas.add(lblValidarDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 230, 20, -1));
 
         panelPestanas.addTab("Registro de Personas", pnlRegistroPersonas);
 
@@ -421,6 +529,7 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
 
             this.panelPestanas.setSelectedIndex(1);
             this.modificar = true;
+            this.deshabilitar = true;
             this.eliminar = true;
             this.btnGuardar.setText("Actualizar");
         }
@@ -429,7 +538,38 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         this.eliminarDatos();
+        //this.eliminarDatosDesactivarEstado();
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtNombresCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtNombresCaretUpdate
+        // TODO add your handling code here:
+        this.validarNombres();
+    }//GEN-LAST:event_txtNombresCaretUpdate
+
+    private void txtApellidoPaternoCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtApellidoPaternoCaretUpdate
+        // TODO add your handling code here:
+        this.validarApellidoPaterno();
+    }//GEN-LAST:event_txtApellidoPaternoCaretUpdate
+
+    private void txtApellidoMaternoCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtApellidoMaternoCaretUpdate
+        // TODO add your handling code here:
+        this.validarApellidoMaterno();
+    }//GEN-LAST:event_txtApellidoMaternoCaretUpdate
+
+    private void txtTelefonoCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTelefonoCaretUpdate
+        // TODO add your handling code here:
+        this.validarTelefono();
+    }//GEN-LAST:event_txtTelefonoCaretUpdate
+
+    private void txtCorreoElectronicoCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtCorreoElectronicoCaretUpdate
+        // TODO add your handling code here:
+        this.validarCorreoElectronico();
+    }//GEN-LAST:event_txtCorreoElectronicoCaretUpdate
+
+    private void txtDireccionCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtDireccionCaretUpdate
+        // TODO add your handling code here:
+        this.validarDireccion();
+    }//GEN-LAST:event_txtDireccionCaretUpdate
 
     /**
      * @param args the command line arguments
@@ -481,6 +621,12 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
     private javax.swing.JLabel lblDireccion;
     private javax.swing.JLabel lblNombres;
     private javax.swing.JLabel lblTelefono;
+    private javax.swing.JLabel lblValidarApellidoMaterno;
+    private javax.swing.JLabel lblValidarApellidoPaterno;
+    private javax.swing.JLabel lblValidarCorreoElectronico;
+    private javax.swing.JLabel lblValidarDireccion;
+    private javax.swing.JLabel lblValidarNombres;
+    private javax.swing.JLabel lblValidarTelefono;
     private javax.swing.JTabbedPane panelPestanas;
     private javax.swing.JPanel pnlListadoPersonas;
     private javax.swing.JPanel pnlRegistroPersonas;

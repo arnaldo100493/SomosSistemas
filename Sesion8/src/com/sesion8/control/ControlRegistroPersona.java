@@ -146,8 +146,25 @@ public class ControlRegistroPersona {
             return false;
         }
     }
-    
-     public boolean eliminarDatos(int id) {
+
+    public boolean eliminarDatosDesactivarEstado(int id) {
+        String sql = "update persona set estado = 0 where id = ?";
+        try {
+            PreparedStatement sentencia = this.conexion.getConexion().prepareStatement(sql);
+            sentencia.setInt(1, id);
+            boolean ejecucion = this.conexion.ejecutarConsultaSQL(sentencia);
+            if (ejecucion) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            MensajesSwing.mostrarDialogoMensajeError("Error al registrar datos: " + ex.getMessage());
+            return false;
+        }
+    }
+
+    public boolean eliminarDatos(int id) {
         String sql = "delete from persona where id = ?";
         try {
             PreparedStatement sentencia = this.conexion.getConexion().prepareStatement(sql);
