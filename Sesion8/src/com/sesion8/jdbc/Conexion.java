@@ -78,7 +78,7 @@ public class Conexion implements Serializable {
         try {
             Class.forName(driver);
             con = (JdbcConnection) DriverManager.getConnection(url, user, password);
-            System.out.println("Conectado correctamente");
+            System.out.println("Conectado correctamente...!!!");
         } catch (ClassNotFoundException ex) {
             System.err.println("Error en la conexión: " + ex.getMessage());
         } catch (SQLException ex) {
@@ -94,7 +94,7 @@ public class Conexion implements Serializable {
         try {
             if (estaConectado()) {
                 conexion.close();
-                System.out.println("Desconectado correctamente");
+                System.out.println("Desconectado correctamente...!!!");
             }
         } catch (SQLException ex) {
             System.err.println("Error en la conexión: " + ex.getMessage());
