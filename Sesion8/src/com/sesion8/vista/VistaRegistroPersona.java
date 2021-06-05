@@ -269,6 +269,8 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
                     MensajesSwing.mostrarDialogoMensajeError("¡Error al Eliminar los Datos!");
                 }
             }
+        } else {
+            MensajesSwing.mostrarDialogoMensajeAdvertencia("¡No ha seleccionado un registro para eliminar!");
         }
     }
 
@@ -287,6 +289,8 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
                     }
                 }
             }
+        } else {
+            MensajesSwing.mostrarDialogoMensajeAdvertencia("¡No ha seleccionado un registro para eliminar!");
         }
     }
 
