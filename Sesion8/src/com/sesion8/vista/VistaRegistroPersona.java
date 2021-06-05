@@ -62,8 +62,10 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
                 return false;
             }
         };
-        //El cursor en nombres
+        //El cursor en Nombres.
         this.txtNombres.requestFocus();
+        //El cursor en Buscar.
+        this.txtBuscar.requestFocus();
         //Agregamos el modelo a la tabla.
         this.tblListadoDatosPersonas.setModel(this.modeloTabla);
         this.modeloTabla.addColumn("Nº");
@@ -99,7 +101,7 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
         LimpiarComponentes.limpiarComponentes(this.pnlRegistroPersonas);
         this.btnGuardar.setText("Guardar");
         this.modificar = false;
-        //El cursor en nombres
+        //El cursor en Nombres.
         this.txtNombres.requestFocus();
     }
 
@@ -297,6 +299,7 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pnlPrincipal = new javax.swing.JPanel();
         panelPestanas = new javax.swing.JTabbedPane();
         pnlListadoPersonas = new javax.swing.JPanel();
         lblBuscar = new javax.swing.JLabel();
@@ -326,9 +329,12 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
         lblValidarTelefono = new javax.swing.JLabel();
         lblValidarCorreoElectronico = new javax.swing.JLabel();
         lblValidarDireccion = new javax.swing.JLabel();
+        lblRegistro = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        pnlPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnlListadoPersonas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -360,7 +366,7 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblListadoDatosPersonas);
 
-        pnlListadoPersonas.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 600, 260));
+        pnlListadoPersonas.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 630, 250));
 
         btnActualizar.setText("Actualizar");
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -484,7 +490,12 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
 
         panelPestanas.addTab("Registro de Personas", pnlRegistroPersonas);
 
-        getContentPane().add(panelPestanas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 710, 370));
+        pnlPrincipal.add(panelPestanas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 700, 390));
+
+        lblRegistro.setText("Registro de Personas");
+        pnlPrincipal.add(lblRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, -1, -1));
+
+        getContentPane().add(pnlPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 720, 440));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -620,6 +631,7 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
     private javax.swing.JLabel lblCorreoElectronico;
     private javax.swing.JLabel lblDireccion;
     private javax.swing.JLabel lblNombres;
+    private javax.swing.JLabel lblRegistro;
     private javax.swing.JLabel lblTelefono;
     private javax.swing.JLabel lblValidarApellidoMaterno;
     private javax.swing.JLabel lblValidarApellidoPaterno;
@@ -629,6 +641,7 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
     private javax.swing.JLabel lblValidarTelefono;
     private javax.swing.JTabbedPane panelPestanas;
     private javax.swing.JPanel pnlListadoPersonas;
+    private javax.swing.JPanel pnlPrincipal;
     private javax.swing.JPanel pnlRegistroPersonas;
     private javax.swing.JTable tblListadoDatosPersonas;
     private javax.swing.JTextField txtApellidoMaterno;

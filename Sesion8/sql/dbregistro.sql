@@ -22,3 +22,4 @@ insert into persona(nombres, apellido_paterno, apellido_materno, telefono, corre
 select * from persona; 
 
 select id, nombres, apellido_paterno, apellido_materno, telefono from persona where estado = 1;
+select id, nombres, apellido_paterno, apellido_materno, telefono from persona where estado = 1 and (nombres like '%%' or apellido_paterno like '%%' or apellido_materno like '%%');
