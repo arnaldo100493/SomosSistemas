@@ -83,7 +83,7 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
         this.mostrarListadoDatos();
 
         //this.setSize(350, 350);
-        //Image image = new ImageIcon(getClass().getResource("/com/puntodeventa/iconos/icono-escaparate-tienda.jpg")).getImage();
+        //Image image = new ImageIcon(getClass().getResource("/com/sesion8/iconos/1981441-agenda-de-contactos.png")).getImage();
         Image iconoPropio = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/sesion8/iconos/1981441-agenda-de-contactos.png"));
         this.setIconImage(iconoPropio);
     }
