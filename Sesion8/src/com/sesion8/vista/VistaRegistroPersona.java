@@ -56,7 +56,7 @@ public class VistaRegistroPersona extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setExtendedState(3);
         this.controlRegistroPersona = new ControlRegistroPersona();
-        //modeloTabla = new DefaultTableModel(this.columnas, 0);
+        //this.modeloTabla = new DefaultTableModel(this.columnas, 0);
         this.modeloTabla = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int fila, int columna) {
