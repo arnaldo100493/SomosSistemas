@@ -53,7 +53,7 @@ public class ControlRegistroPersona {
                 return false;
             }
         } catch (SQLException ex) {
-            MensajesSwing.mostrarDialogoMensajeError("Error al registrar datos: " + ex.getMessage());
+            MensajesSwing.mostrarDialogoMensajeError("Error al registrar los datos: " + ex.getMessage());
             return false;
         }
     }
@@ -75,19 +75,21 @@ public class ControlRegistroPersona {
                 return false;
             }
         } catch (SQLException ex) {
-            MensajesSwing.mostrarDialogoMensajeError("Error al registrar datos: " + ex.getMessage());
+            MensajesSwing.mostrarDialogoMensajeError("Error al registrar los datos: " + ex.getMessage());
             return false;
         }
     }
 
     public Object[] consultarDatos(int id) {
         Object[] datos = new Object[6];
+        int i = 0;
         String sql = "select nombres, apellido_paterno, apellido_materno, telefono, correo_electronico, direccion from persona where id = ?";
         try {
             PreparedStatement sentencia = this.conexion.getConexion().prepareStatement(sql);
             sentencia.setInt(1, id);
             ResultSet resultado = sentencia.executeQuery();
             while (resultado.next()) {
+                i++;
                 datos[0] = resultado.getString(1); //Nombres.
                 datos[1] = resultado.getString(2); //Apellido Paterno.
                 datos[2] = resultado.getString(3); //Apellido Materno.
@@ -96,7 +98,10 @@ public class ControlRegistroPersona {
                 datos[5] = resultado.getString(6); //Dirección.
             }
         } catch (SQLException ex) {
-            MensajesSwing.mostrarDialogoMensajeError("Error al consultar datos: " + ex.getMessage());
+            MensajesSwing.mostrarDialogoMensajeError("Error al consultar los datos: " + ex.getMessage());
+        }
+        if (i == 0) {
+            return null;
         }
         return datos;
     }
@@ -119,7 +124,7 @@ public class ControlRegistroPersona {
                 return false;
             }
         } catch (SQLException ex) {
-            MensajesSwing.mostrarDialogoMensajeError("Error al registrar datos: " + ex.getMessage());
+            MensajesSwing.mostrarDialogoMensajeError("Error al modificar los datos: " + ex.getMessage());
             return false;
         }
     }
@@ -142,7 +147,7 @@ public class ControlRegistroPersona {
                 return false;
             }
         } catch (SQLException ex) {
-            MensajesSwing.mostrarDialogoMensajeError("Error al registrar datos: " + ex.getMessage());
+            MensajesSwing.mostrarDialogoMensajeError("Error al modificar los datos: " + ex.getMessage());
             return false;
         }
     }
@@ -159,7 +164,7 @@ public class ControlRegistroPersona {
                 return false;
             }
         } catch (SQLException ex) {
-            MensajesSwing.mostrarDialogoMensajeError("Error al registrar datos: " + ex.getMessage());
+            MensajesSwing.mostrarDialogoMensajeError("Error al eliminar los datos: " + ex.getMessage());
             return false;
         }
     }
@@ -176,7 +181,7 @@ public class ControlRegistroPersona {
                 return false;
             }
         } catch (SQLException ex) {
-            MensajesSwing.mostrarDialogoMensajeError("Error al registrar datos: " + ex.getMessage());
+            MensajesSwing.mostrarDialogoMensajeError("Error al eliminar los datos: " + ex.getMessage());
             return false;
         }
     }
